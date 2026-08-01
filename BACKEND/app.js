@@ -6,19 +6,18 @@ import authRouter from "./src/routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  }),
-);
-
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 dotenv.config();
 
 const app = express();
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

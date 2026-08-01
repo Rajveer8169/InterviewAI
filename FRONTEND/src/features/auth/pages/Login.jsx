@@ -1,16 +1,19 @@
 import styled from "styled-components";
 import { useAuth } from "../hooks/useAuth.js";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
   const { loading, handleLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleLogin({ email, password });
+    navigate("/");
   };
 
   if (loading) {
@@ -29,7 +32,6 @@ const Login = () => {
         <label>
           <input
             required
-            placeholder
             type="email"
             onChange={(e) => {
               setEmail(e.target.value);
@@ -41,7 +43,6 @@ const Login = () => {
         <label>
           <input
             required
-            placeholder
             type="password"
             onChange={(e) => {
               setPassword(e.target.value);

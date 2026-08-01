@@ -1,26 +1,82 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import styled from "styled-components";
+import { useAuth } from "../hooks/useAuth.js";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const {loading,handleRegister} = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      await handleRegister({
+        username,
+        email,
+        password,
+      });
+      navigate("/");
+  };
+
+    if (loading) {
+    return (
+      <main>
+        <h1>Loading...</h1>
+      </main>
+    );
+  }
+
+
   return (
     <StyledWrapper>
-      <form className="form">
-        <p className="title">Register </p>
-        <p className="message">Create a new account. </p>
+      <form className="form" onSubmit={handleSubmit}>
+        <p className="title">Register</p>
+
+        <p className="message">Create a new account.</p>
+
         <label>
-          <input required placeholder type="text" className="input" />
+          <input
+            required
+            type="text"
+            className="input"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <span>Username</span>
         </label>
+
         <label>
-          <input required placeholder type="email" className="input" />
+          <input
+            required
+            type="email"
+            className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <span>Email</span>
         </label>
+
         <label>
-          <input required placeholder type="password" className="input" />
+          <input
+            required
+            type="password"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <span>Password</span>
         </label>
-        <button className="submit">Register</button>
+
+        <button type="submit" className="submit">
+          Register
+        </button>
+
         <p className="signin">
-          Already have an acount ? <a href="/login">Signin</a>{" "}
+          Already have an account? <Link to="/login">Signin</Link>
         </p>
       </form>
     </StyledWrapper>
@@ -38,8 +94,8 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 450px;      
-    max-width: 90%; 
+    width: 450px;
+    max-width: 90%;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 20px;
@@ -65,14 +121,13 @@ const StyledWrapper = styled.div`
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    left: 0px;
+    left: 0;
     background-color: royalblue;
   }
 
   .title::before {
     width: 18px;
     height: 18px;
-    background-color: royalblue;
   }
 
   .title::after {
@@ -93,16 +148,11 @@ const StyledWrapper = styled.div`
 
   .signin a {
     color: royalblue;
+    text-decoration: none;
   }
 
   .signin a:hover {
-    text-decoration: underline royalblue;
-  }
-
-  .flex {
-    display: flex;
-    width: 100%;
-    gap: 6px;
+    text-decoration: underline;
   }
 
   .form label {
@@ -111,36 +161,31 @@ const StyledWrapper = styled.div`
 
   .form label .input {
     width: 100%;
-    padding: 10px 10px 20px 10px;
+    padding: 10px;
     outline: 0;
     border: 1px solid rgba(105, 105, 105, 0.397);
     border-radius: 10px;
+    box-sizing: border-box;
   }
 
   .form label .input + span {
     position: absolute;
     left: 10px;
-    top: 15px;
+    top: 12px;
     color: grey;
     font-size: 0.9em;
     cursor: text;
     transition: 0.3s ease;
-  }
-
-  .form label .input:placeholder-shown + span {
-    top: 15px;
-    font-size: 0.9em;
+    background: white;
+    padding: 0 4px;
   }
 
   .form label .input:focus + span,
-  .form label .input:valid + span {
-    top: 30px;
+  .form label .input:not(:placeholder-shown) + span {
+    top: -8px;
     font-size: 0.7em;
     font-weight: 600;
-  }
-
-  .form label .input:valid + span {
-    color: green;
+    color: royalblue;
   }
 
   .submit {
@@ -151,6 +196,7 @@ const StyledWrapper = styled.div`
     border-radius: 10px;
     color: #fff;
     font-size: 16px;
+    cursor: pointer;
     transition:
       transform 0.2s ease,
       background-color 0.2s ease;
