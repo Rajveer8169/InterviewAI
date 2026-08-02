@@ -30,15 +30,21 @@ export const registerUserController = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
     });
 
     await newUser.save();
 
-    res
-      .status(201)
-      .json({ message: "User registered successfully", token, newUser });
+    res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+      },
+    });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -72,11 +78,19 @@ export const loginUserController = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
     });
 
-    res.status(200).json({ message: "Login successful", token, existingUser });
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: existingUser._id,
+        username: existingUser.username,
+        email: existingUser.email,
+      },
+    });
   } catch (error) {
     console.error("Error logging in user:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -101,8 +115,15 @@ export const logoutUserController = async (req, res) => {
 export const getMeController = async (req, res) => {
   try {
     const userId = req.user.id;
-    const findUSer = await user.findById(userId);
-    res.status(200).json({ message: "User data fetched successfully", findUSer });
+    const User = await user.findById(userId);
+    res.status(200).json({
+      message: "User data fetched successfully",
+      user: {
+        id: User._id,
+        username: User.username,
+        email: User.email,
+      },
+    });
   } catch (error) {
     console.error("Error fetching user data:", error);
     res.status(500).json({ message: "Internal server error" });
