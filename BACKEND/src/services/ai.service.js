@@ -489,7 +489,7 @@ Requirements:
 5. Do not invent experience or skills.
 6. Make it professional and simple.
 7. Make it ATS friendly.
-8. Keep it 1-2 pages.
+8. Keep it 1 page.
 9. Use HTML and CSS.
 10. Do not return markdown.
 `;

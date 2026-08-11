@@ -32,14 +32,23 @@ export const getAllInterviewReports = async () => {
   return response.data;
 };
 
-export const generateResumePdf = async ({ interviewReportId }) => {
-  const response = await api.post(
-    `/api/interview/resume/pdf/${interviewReportId}`,
-    null,
-    {
-      responseType: "blob",
-    },
-  );
+export const generateResumePdf = async (interviewId) => {
+    try {
+        const response = await axios.post(
+            `http://localhost:3000/api/interview/resume/pdf/${interviewId}`,
+            {},
+            {
+              withCredentials: true,
+                responseType: "blob",
+            }
+        );
 
-  return response.data;
+        return response.data;
+    } catch (error) {
+        console.log("STATUS:", error.response?.status);
+        console.log("DATA:", error.response?.data);
+        console.log("MESSAGE:", error.message);
+
+        throw error;
+    }
 };
