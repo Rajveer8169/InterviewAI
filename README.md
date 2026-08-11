@@ -8,7 +8,7 @@ The platform uses **Google Gemini AI** to generate technical questions, behavior
 
 ## 🚀 Live Demo
 
-**Frontend:** https://interviewai-frontend-83hz.onrender.com/login
+**Frontend:** https://interviewai-frontend-83hz.onrender.com
 
 **Backend:** https://interviewai-backend-a4o0.onrender.com
 
