@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: "https://interview-ai-bay-two.vercel.app",
+        origin: "https://interviewai-frontend-83hz.onrender.com",
         credentials: true,
     })
 );
