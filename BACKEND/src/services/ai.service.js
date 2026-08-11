@@ -399,49 +399,42 @@ tasks
 // GENERATE PDF FROM HTML
 // =====================================================
 
-async function generatePdfFromHtml(
-    htmlContent
-) {
-    const browser = await puppeteer.launch({
-  headless: true,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-  ],
-});
+async function generatePdfFromHtml(htmlContent) {
+  const browser = await puppeteer.launch({
+    headless: true,
 
-    try {
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+    ],
+  });
 
-        const page =
-            await browser.newPage();
+  try {
+    const page = await browser.newPage();
 
-        await page.setContent(
-            htmlContent,
-            {
-                waitUntil:
-                    "networkidle0",
-            }
-        );
+    await page.setContent(htmlContent, {
+      waitUntil: "networkidle0",
+    });
 
-        const pdfBuffer =
-            await page.pdf({
-                format: "A4",
+    const pdfBuffer = await page.pdf({
+      format: "A4",
 
-                margin: {
-                    top: "20mm",
-                    bottom: "20mm",
-                    left: "15mm",
-                    right: "15mm",
-                },
-            });
+      printBackground: true,
 
-        return pdfBuffer;
+      margin: {
+        top: "20mm",
+        bottom: "20mm",
+        left: "15mm",
+        right: "15mm",
+      },
+    });
 
-    } finally {
-
-        await browser.close();
-
-    }
+    return pdfBuffer;
+  } finally {
+    await browser.close();
+  }
 }
 
 // =====================================================
