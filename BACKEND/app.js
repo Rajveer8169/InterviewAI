@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: "https://interview-ai-bay-two.vercel.app/login",
+        origin: "https://interview-ai-bay-two.vercel.app",
         credentials: true,
     })
 );
