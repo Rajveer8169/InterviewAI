@@ -29,11 +29,11 @@ export const registerUserController = async (req, res) => {
     );
 
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60,
-    });
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60
+});
 
     await newUser.save();
 
@@ -77,11 +77,11 @@ export const loginUserController = async (req, res) => {
     );
 
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60,
-    });
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60
+});
 
     res.status(200).json({
       message: "Login successful",
