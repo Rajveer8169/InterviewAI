@@ -475,7 +475,6 @@ MongoDB Atlas is used for cloud database hosting.
 ### Connect with me
 
 * GitHub: https://github.com/Rajveer8169
-* LinkedIn: Add your LinkedIn profile here
 
 ---
 
